@@ -6,6 +6,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,7 +23,16 @@ fun MainScreen(viewModel: ModelView) {
         topBar = {
             // Barra superior con texto
             TopAppBar(
-                title = { Text("Buscador \uD83D\uDCCD") }
+                title = {
+                    Text(
+                        "BUSCADOR DE UBICACIÓN",
+                        fontSize = 22.sp,
+                        color = Color.DarkGray,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center,
+                    )
+                }
             )
         },
         content = { innerPadding ->
@@ -29,26 +40,35 @@ fun MainScreen(viewModel: ModelView) {
                 modifier = Modifier
                     .fillMaxSize() // Ocupa el tamaño disponible
                     .padding(innerPadding) // Añade padding interno
-                    .padding(16.dp) // Añade padding adicional
+                    .padding(horizontal = 18.dp, vertical = 6.dp) // Añade padding adicional
             ) {
                 // Campo de texto del buscador
                 TextField(
                     value = searchQuery, // Valor actual del campo de texto
                     onValueChange = { viewModel.actualizarBusqueda(it) }, // Actualiza el valor en el ViewModel
                     label = { Text("Introduce una ubicación") },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = TextFieldDefaults.textFieldColors(
+                        containerColor = Color.LightGray,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        focusedLabelColor = Color.DarkGray, // Cambia el color del texto del label cuando está enfocado
+                        unfocusedLabelColor = Color.DarkGray // Cambia el color del texto del label cuando no está enfocado
+                    )
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Button(
                     onClick = { viewModel.enviarBusqueda() },
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF008000)),
                     shape = RectangleShape
                 ) {
-                    Text("Enviar",
+                    Text(
+                        "Enviar",
                         color = Color.White,
-                        fontSize = 16.sp)
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Box(
