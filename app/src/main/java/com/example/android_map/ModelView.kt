@@ -12,4 +12,8 @@ class ModelView : ViewModel() {
     fun actualizarBusqueda(newQuery: String) {
         _busqueda.value = newQuery
     }
+
+    // Función para enviar la consulta de búsqueda
+    fun enviarBusqueda() {
+    }
 }

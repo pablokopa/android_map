@@ -7,4 +7,5 @@ El objetivo de esta aplicación es crear una interfaz de búsqueda muy sencilla 
 ### Características
 
 - **Barra de Búsqueda**: Permite a los usuarios ingresar una ubicación para buscar.
+- **Botón de Enviar**: Permite enviar la ubicación introducida por el usuario.
 - **Integración con Google Maps**: Muestra el mapa de la ubicación buscada.
