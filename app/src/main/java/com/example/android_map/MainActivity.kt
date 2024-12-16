@@ -33,5 +33,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Activar los controles de zoom
         googleMap.uiSettings.isZoomControlsEnabled = true
+
+        // Pasar el GoogleMap al ViewModel
+        viewModel.setGoogleMap(googleMap)
     }
 }
