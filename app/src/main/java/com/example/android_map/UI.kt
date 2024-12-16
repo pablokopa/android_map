@@ -12,16 +12,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.android_map.ui.theme.Android_mapTheme
+import android.os.Bundle
+import androidx.compose.ui.viewinterop.AndroidView
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.OnMapReadyCallback
 
-@OptIn(ExperimentalMaterial3Api::class) // Indica que se está utilizando una API experimental
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(viewModel: ModelView) {
-    // Obtener el valor actual de la consulta de búsqueda desde el ViewModel
     val searchQuery by viewModel.searchQuery.collectAsState()
+    var mapView: MapView? by remember { mutableStateOf(null) }
 
     Scaffold(
         topBar = {
-            // Barra superior con texto
             TopAppBar(
                 title = {
                     Text(
@@ -38,22 +41,23 @@ fun MainScreen(viewModel: ModelView) {
         content = { innerPadding ->
             Column(
                 modifier = Modifier
-                    .fillMaxSize() // Ocupa el tamaño disponible
-                    .padding(innerPadding) // Añade padding interno
-                    .padding(horizontal = 18.dp, vertical = 6.dp) // Añade padding adicional
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .padding(horizontal = 18.dp, vertical = 6.dp)
             ) {
-                // Campo de texto del buscador
                 TextField(
-                    value = searchQuery, // Valor actual del campo de texto
-                    onValueChange = { viewModel.actualizarBusqueda(it) }, // Actualiza el valor en el ViewModel
-                    label = { Text("Introduce una ubicación") },
-                    modifier = Modifier.fillMaxWidth(),
+                    value = searchQuery,
+                    onValueChange = { viewModel.actualizarBusqueda(it) },
+                    label = { Text("Introduce una ubicaci��n") },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 8.dp),
                     colors = TextFieldDefaults.textFieldColors(
                         containerColor = Color.LightGray,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
-                        focusedLabelColor = Color.DarkGray, // Cambia el color del texto del label cuando está enfocado
-                        unfocusedLabelColor = Color.DarkGray // Cambia el color del texto del label cuando no está enfocado
+                        focusedLabelColor = Color.DarkGray,
+                        unfocusedLabelColor = Color.DarkGray
                     )
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -71,13 +75,20 @@ fun MainScreen(viewModel: ModelView) {
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                Box(
+                AndroidView(
+                    factory = { context ->
+                        MapView(context).apply {
+                            mapView = this
+                            onCreate(Bundle())
+                            getMapAsync(OnMapReadyCallback { googleMap ->
+
+                            })
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxSize()
                         .weight(1f)
-                ) {
-                    // Aquí va a ir el mapa
-                }
+                )
             }
         }
     )

@@ -28,6 +28,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        // Configura el mapa aquí
+        // Indicar el tipo del mapa
+        googleMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+
+        // Activar los controles de zoom
+        googleMap.uiSettings.isZoomControlsEnabled = true
     }
 }
